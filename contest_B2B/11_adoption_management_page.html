@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입양 관리</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FEFDF6;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .frame {
+            width: 393px;
+            height: 852px;
+            margin: 0 auto;
+            background-color: #FEFDF6;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        /* 상단 헤더 */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 393px;
+            height: 60px;
+            background: #FEFDF6;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #4B352A;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-family: 'Inter';
+            font-weight: 700;
+            font-size: 16px;
+            color: #000;
+            margin-right: 24px;
+        }
+
+        /* 검색 영역 */
+        .search-section {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 393px;
+            padding: 16px;
+            background: #FEFDF6;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #D8D8D8;
+            border-radius: 20px;
+            padding: 10px 40px 10px 16px;
+            font-family: 'Pretendard';
+            font-size: 14px;
+            color: #000;
+            background: #FFFFFF;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #CA7842;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #999;
+        }
+
+        /* 필터 버튼들 */
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid #D8D8D8;
+            border-radius: 15px;
+            background: #FFFFFF;
+            font-family: 'Pretendard';
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: #CA7842;
+            border-color: #CA7842;
+            color: #FFF;
+        }
+
+        .filter-btn:hover {
+            border-color: #CA7842;
+        }
+
+        /* 동물 리스트 */
+        .animal-list {
+            position: absolute;
+            top: 150px;
+            left: 0;
+            width: 393px;
+            padding: 16px;
+            padding-bottom: 150px;
+        }
+
+        .animal-card {
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .animal-info {
+            display: flex;
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .animal-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .animal-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .animal-name {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 14px;
+            color: #000;
+        }
+
+        .animal-breed {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .animal-meta {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .animal-date {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* 상태 뱃지 */
+        .status-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-family: 'Pretendard';
+            font-weight: 500;
+            font-size: 10px;
+            color: #FFF;
+        }
+
+        .status-waiting {
+            background: #CA7842;
+        }
+
+        .status-approved {
+            background: #4CAF50;
+        }
+
+        .status-available {
+            background: #2196F3;
+        }
+
+        /* 액션 버튼들 */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            padding: 0 16px 16px;
+        }
+
+        .action-btn {
+            flex: 1;
+            height: 32px;
+            border: 1px solid #D8D8D8;
+            border-radius: 6px;
+            background: #FFFFFF;
+            font-family: 'Pretendard';
+            font-weight: 500;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .action-btn.primary {
+            background: #CA7842;
+            border-color: #CA7842;
+            color: #FFF;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* 신규 동물 등록 버튼 */
+        .add-animal-btn {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 361px;
+            height: 48px;
+            background: #CA7842;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 16px;
+            color: #FFF;
+            cursor: pointer;
+            box-shadow: 0px 4px 12px rgba(202, 120, 66, 0.3);
+        }
+
+        .add-animal-btn:hover {
+            background: #B86B38;
+        }
+
+        .add-animal-btn:active {
+            background: #A05F32;
+        }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 393px;
+            height: 65px;
+            background: #FFFFFF;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+
+        .nav-text {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .nav-text.active {
+            color: #4B352A;
+        }
+
+        /* 반응형 */
+        @media (max-width: 393px) {
+            .frame, .header, .search-section, .animal-list, .bottom-nav {
+                width: 100vw;
+            }
+            
+            .add-animal-btn {
+                width: calc(100vw - 32px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <!-- 상단 헤더 -->
+        <div class="header">
+            <button class="back-button" onclick="goBack()">◀</button>
+            <div class="header-title">입양 관리</div>
+        </div>
+
+        <!-- 검색 영역 -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="동물이름, 품종명으로 검색">
+                <span class="search-icon">🔍</span>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active">전체</button>
+                <button class="filter-btn">대기</button>
+                <button class="filter-btn">승인</button>
+                <button class="filter-btn">거절</button>
+                <button class="filter-btn">입양완료</button>
+                <button class="filter-btn">우선순위</button>
+            </div>
+        </div>
+
+        <!-- 동물 리스트 -->
+        <div class="animal-list">
+            <!-- 동물 카드 1 -->
+            <div class="animal-card">
+                <div class="status-badge status-waiting">대기</div>
+                <div class="animal-info">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=100&h=100&fit=crop" alt="몽실이" class="animal-image">
+                    <div class="animal-details">
+                        <div class="animal-name">몽실 / 3개월 / 암컷</div>
+                        <div class="animal-breed">신청: 이수진 연락처: 010-****-3322</div>
+                        <div class="animal-date">신청일: 2024.06.01</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn">대기</button>
+                    <button class="action-btn primary">승인하기</button>
+                    <button class="action-btn">상세정보 ▼</button>
+                </div>
+            </div>
+
+            <!-- 동물 카드 2 -->
+            <div class="animal-card">
+                <div class="status-badge status-approved">승인</div>
+                <div class="animal-info">
+                    <img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=100&h=100&fit=crop" alt="초롱이" class="animal-image">
+                    <div class="animal-details">
+                        <div class="animal-name">초롱 / 1세 / 수컷</div>
+                        <div class="animal-breed">신청: 박지은 연락처: 010-****-3344</div>
+                        <div class="animal-date">신청일: 2024.06.26</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn">승인</button>
+                    <button class="action-btn primary">승인하기</button>
+                    <button class="action-btn">상세정보 ▼</button>
+                </div>
+            </div>
+
+            <!-- 동물 카드 3 -->
+            <div class="animal-card">
+                <div class="status-badge status-available">거절</div>
+                <div class="animal-info">
+                    <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=100&h=100&fit=crop" alt="뚱뚱이" class="animal-image">
+                    <div class="animal-details">
+                        <div class="animal-name">뚱뚱 / 2세 / 암컷</div>
+                        <div class="animal-breed">신청: 최수진 연락처: 010-****-5566</div>
+                        <div class="animal-date">신청일: 2024.06.26</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn">거절</button>
+                    <button class="action-btn primary">승인하기</button>
+                    <button class="action-btn">상세정보 ▼</button>
+                </div>
+            </div>
+
+            <!-- 동물 카드 4 -->
+            <div class="animal-card">
+                <div class="status-badge status-waiting">대기</div>
+                <div class="animal-info">
+                    <img src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=100&h=100&fit=crop" alt="호미" class="animal-image">
+                    <div class="animal-details">
+                        <div class="animal-name">호미 / 4개월 / 수컷</div>
+                        <div class="animal-breed">신청: 허수진 연락처: 010-****-7786</div>
+                        <div class="animal-date">신청일: 2024.06.20</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn">대기</button>
+                    <button class="action-btn primary">승인하기</button>
+                    <button class="action-btn">상세정보 ▼</button>
+                </div>
+            </div>
+
+            <!-- 동물 카드 5 -->
+            <div class="animal-card">
+                <div class="status-badge status-approved">승인</div>
+                <div class="animal-info">
+                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=100&h=100&fit=crop" alt="콩순이" class="animal-image">
+                    <div class="animal-details">
+                        <div class="animal-name">콩순이 / 4개월 / 암컷</div>
+                        <div class="animal-breed">신청: 김민수 연락처: 010-****-9900</div>
+                        <div class="animal-date">신청일: 2024.06.16</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn">승인</button>
+                    <button class="action-btn primary">승인하기</button>
+                    <button class="action-btn">상세정보 ▼</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 신규 동물 등록 버튼 -->
+        <button class="add-animal-btn" onclick="addNewAnimal()">
+            🐾 신규 동물 등록하기
+        </button>
+
+        <!-- 하단 네비게이션 -->
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text">홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">❤️</div>
+                <div class="nav-text active">입양</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <div class="nav-text">등록</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <div class="nav-text">제보</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-text">설정</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            history.back();
+        }
+
+        function addNewAnimal() {
+            alert('신규 동물 등록 페이지로 이동합니다.');
+            // 실제 구현에서는 등록 페이지로 이동
+        }
+
+        // 필터 버튼 클릭 이벤트
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterAnimals(this.textContent);
+            });
+        });
+
+        // 액션 버튼 클릭 이벤트
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const action = this.textContent;
+                
+                if (action === '승인하기') {
+                    if (confirm('입양을 승인하시겠습니까?')) {
+                        alert('입양이 승인되었습니다.');
+                        // 상태 업데이트 로직
+                    }
+                } else if (action.includes('상세정보')) {
+                    alert('상세정보 페이지로 이동합니다.');
+                }
+            });
+        });
+
+        // 검색 기능
+        document.querySelector('.search-input').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            // 검색 로직 구현
+        });
+
+        function filterAnimals(filter) {
+            // 필터링 로직 구현
+            console.log('필터:', filter);
+        }
+    </script>
+</body>
+</html>

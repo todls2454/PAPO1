@@ -1,0 +1,988 @@
+<html lang="ko"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>video_AI2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FEFDF6;
+            width: 393px;
+            height: 1260px;
+            margin: 0 auto;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #FEFDF6;
+        }
+
+        /* 상단 헤더 */
+        .header {
+            position: absolute;
+            left: 28.12px;
+            top: 14px;
+            width: 200px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-arrow {
+            font-weight: 400;
+            font-size: 18px;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 구분선 */
+        .separator-line {
+            position: absolute;
+            left: 0px;
+            top: 53px;
+            width: 393px;
+            height: 1px;
+            background-color: #000000;
+        }
+
+        /* 설명 텍스트 */
+        .description {
+            position: absolute;
+            left: 28px;
+            top: 65px;
+            width: 330px;
+            height: 18px;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 탭 섹션 */
+        .tab-section {
+            position: absolute;
+            left: 0px;
+            top: 128px;
+            width: 393px;
+            height: 24px;
+        }
+
+        .tab-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 0 68px 0 68px;
+        }
+
+        .tab-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .photo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #D9D9D9;
+            border: 1px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .video-icon {
+            width: 19px;
+            height: 19px;
+            background-color: #4B352A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 500;
+            color: #FFFFFF;
+        }
+
+        .tab-text {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+        }
+
+        .tab-text.active {
+            color: #d7b87b;
+        }
+
+        .tab-text.inactive {
+            color: #000000;
+        }
+
+        /* 탭 하단 라인들 */
+        .section-line {
+            position: absolute;
+            left: 15px;
+            top: 167px;
+            width: 365px;
+            height: 1px;
+            background-color: #000000;
+        }
+
+        .tab-line {
+            position: absolute;
+            left: 196px;
+            top: 166px;
+            width: 184px;
+            height: 2px;
+            background-color: #CA7842;
+        }
+
+        /* 릴스 템플릿 선택 */
+        .template-title {
+            position: absolute;
+            left: 15px;
+            top: 201px;
+            width: 130px;
+            height: 18px;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .template-container {
+            position: absolute;
+            left: 16px;
+            top: 227px;
+            width: 356px;
+            height: 131px;
+            display: flex;
+            gap: 24px;
+        }
+
+        .template-item {
+            width: 174px;
+            height: 131px;
+            background-color: transparent;
+            border: 0.3px solid #D8D8D8;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            transition: border-color 0.3s;
+            position: relative;
+        }
+
+        .template-item.selected {
+            border-color: #CA7842;
+            border-width: 2px;
+        }
+
+        .template-image-1 {
+            position: absolute;
+            left: 16px;
+            top: 22px;
+            width: 139px;
+            height: 78px;
+            background-color: rgba(217, 217, 217, 0.7);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .template-image-2 {
+            position: absolute;
+            left: 16px;
+            top: 22px;
+            width: 140px;
+            height: 78px;
+            background-color: rgba(217, 217, 217, 0.7);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .template-label {
+            position: absolute;
+            left: 58px;
+            top: 109px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 유기동물 선택 - 수정된 부분 */
+        .animal-title {
+            position: absolute;
+            left: 16px;
+            top: 392px;
+            width: 82px;
+            height: 18px;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .animal-container {
+            position: absolute;
+            left: 16px;
+            top: 418px;
+            width: 361px;
+            height: 109px;
+            background-color: transparent;
+            border: 0.3px solid #D8D8D8;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            gap: 16px;
+        }
+
+        .animal-image {
+            width: 82px;
+            height: 86px;
+            background-color: #F8F9FA;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .animal-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .animal-name {
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .animal-details {
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .change-button {
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #4B352A;
+            cursor: pointer;
+        }
+
+        /* 생성 버튼 */
+        .generate-button {
+            position: absolute;
+            left: 25px;
+            top: 553px;
+            width: 343px;
+            height: 47px;
+            background-color: #CA7842;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .generate-icon {
+            width: 19px;
+            height: 19px;
+            background-color: #D9D9D9;
+            border: 1px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .generate-text {
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 미리보기 섹션 */
+        .preview-section {
+            position: absolute;
+            left: 14px;
+            top: 629px;
+            width: 365px;
+            height: 279px;
+            background-color: rgba(248, 248, 248, 0.9);
+            border-radius: 15px;
+        }
+
+        .preview-title {
+            position: absolute;
+            left: 17px;
+            top: 11px;
+            width: 52px;
+            height: 18px;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+
+        .video-player {
+            position: absolute;
+            left: 50px;
+            top: 48px;
+            width: 266px;
+            height: 171px;
+            background-color: #D9D9D9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 7px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .preview-image {
+            width: 266px;      /* 원하는 크기 */
+            height: auto;      /* 비율 유지 */
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .video-label {
+            position: absolute;
+            left: 187px;
+            top: 759px;
+            width: 19px;
+            height: 8px;
+            font-weight: 500;
+            font-size: 7px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 액션 버튼들 */
+        .action-buttons {
+            position: absolute;
+            left: 31px;
+            top: 857px;
+            width: 334px;
+            height: 38px;
+            display: flex;
+            gap: 28px;
+        }
+
+        .download-button {
+            width: 153px;
+            height: 38px;
+            background-color: #CA7842;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .share-button {
+            width: 153px;
+            height: 38px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .button-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #D9D9D9;
+            border: 1px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .button-text {
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 최근 생성한 릴스 */
+        .recent-title {
+            position: absolute;
+            left: 16px;
+            top: 943px;
+            width: 150px;
+            height: 18px;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .recent-container {
+            position: absolute;
+            left: 16px;
+            top: 977px;
+            width: 361px;
+            height: 195px;
+        }
+
+        .recent-item {
+            position: relative;
+            width: 361px;
+            height: 95px;
+            margin-bottom: 5px;
+            background-color: transparent;
+            border: 0.3px solid #D8D8D8;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .recent-image {
+            position: absolute;
+            left: 31px;
+            top: 19px;
+            width: 101px;
+            height: 58px;
+            background-color: #D9D9D9;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .recent-content {
+            position: absolute;
+            left: 156px;
+            top: 31px;
+            width: 150px;
+            height: 35px;
+        }
+
+        .recent-text {
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .recent-date {
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .recent-menu {
+            position: absolute;
+            right: 16px;
+            top: 24px;
+            width: 16px;
+            height: 16px;
+            background-color: #D9D9D9;
+            border: 1px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 500;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: absolute;
+            left: 0px;
+            top: 1195px;
+            width: 393px;
+            height: 65px;
+            background: #FFFFFF;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+
+        .nav-text {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .nav-text.active {
+            color: #4B352A;
+        }
+
+        /* 모달 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            width: 388px;
+            height: 430px;
+            background-color: #FEFDF6;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-item {
+            position: absolute;
+            width: 361px;
+            height: 109px;
+            background-color: transparent;
+            border: 0.3px solid #D8D8D8;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .modal-item.selected {
+            border-color: #CA7842;
+            border-width: 2px;
+        }
+
+        .modal-item:nth-child(1) {
+            left: 13px;
+            top: 45px;
+        }
+
+        .modal-item:nth-child(2) {
+            left: 13px;
+            top: 165px;
+        }
+
+        .modal-item:nth-child(3) {
+            left: 13px;
+            top: 285px;
+        }
+
+        .modal-animal-image {
+            position: absolute;
+            left: 16px;
+            top: 12px;
+            width: 82px;
+            height: 86px;
+            background-color: #D9D9D9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        .modal-animal-info {
+            position: absolute;
+            left: 118px;
+            top: 37px;
+            width: 200px;
+            height: 35px;
+        }
+
+        .modal-animal-name {
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .modal-animal-details {
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.19em;
+            color: #000000;
+        }
+
+        /* 반응형 */
+        @media (max-width: 393px) {
+            body {
+                width: 100vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 상단 헤더 -->
+        <div class="header">
+            <span class="back-arrow">＜</span>
+            <h1 class="title">마케팅 콘텐츠</h1>
+        </div>
+        
+        <!-- 구분선 -->
+        <div class="separator-line"></div>
+        
+        <!-- 설명 텍스트 -->
+        <p class="description">등록된 유기동물 사진으로 릴스를 자동 생성하세요.</p>
+        
+        <!-- 탭 섹션 -->
+        <div class="tab-section">
+            <div class="tab-content">
+                <div class="tab-item">
+                    <div class="icon">📷</div>
+                    <span class="tab-text" onclick="goTopContent()">사진 자동 보정</span>
+                </div>
+                <div class="tab-item">
+                    <div class="icon">📽️</div>
+                    <span class="tab-text">릴스 자동 생성</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 탭 하단 라인들 -->
+        <div class="section-line"></div>
+        <div class="tab-line"></div>
+        
+       <!-- 릴스 템플릿 선택 -->
+        <h3 class="template-title">릴스 템플릿 선택</h3>
+        <div class="template-container">
+            <div class="template-item" id="cuteTemplate">
+                <img src="img/b1.png" alt="원본 이미지" class="template-image-1">
+                <div class="template-label">귀여운 버전</div>
+            </div>
+            <div class="template-item" id="emotionalTemplate">
+                <img src="img/b2.png" alt="원본 이미지" class="template-image-2">
+                <div class="template-label">감성적 버전</div>
+            </div>
+        </div>
+        
+        <!-- 유기동물 선택 - 수정된 부분 -->
+        <h3 class="animal-title">유기동물 선택</h3>
+        <div class="animal-container" id="animalSelector">
+            <img src="img/v3.png" alt="원본 이미지" class="animal-image">
+            <div class="animal-info">
+                <div class="animal-name">초코 (골든 리트리버)</div>
+                <div class="animal-details">2살 / 수컷 / 포항 보호소</div>
+            </div>
+            <div class="change-button">변경</div>
+        </div>
+        
+        <!-- 생성 버튼 -->
+        <!-- 생성 버튼 -->
+        <button class="generate-button" id="generateButton">
+            <div class="icon">📽️</div>
+            <span class="generate-text">릴스 자동 생성하기</span>
+        </button>
+        
+        <!-- 미리보기 섹션 -->
+        <div class="preview-section">
+            <h3 class="preview-title">미리보기</h3>
+            <img src="img/ooo.png" alt="원본 이미지" class="video-player">
+
+            <div class="video-label">비디오</div>
+        </div>
+        
+        <!-- 액션 버튼들 -->
+        <div class="action-buttons">
+            <button class="download-button">
+                <div class="icon">📩</div>
+                <span class="button-text">다운로드</span>
+            </button>
+            <button class="share-button">
+                <div class="icon">📬</div>
+                <span class="button-text">공유하기</span>
+            </button>
+        </div>
+        
+        <!-- 최근 생성한 릴스 -->
+        <h3 class="recent-title">최근 생성한 릴스</h3>
+        <div class="recent-container">
+            <div class="recent-item">
+                <img src="img/b3.png" alt="원본 이미지" class="recent-image">
+                <div class="recent-content">
+                    <div class="recent-text">까망이의 새 가족을 찾아요</div>
+                    <div class="recent-date">2025.06.18 생성</div>
+                </div>
+                
+            </div>
+            <div class="recent-item">
+                <img src="img/b4.png" alt="원본 이미지" class="recent-image">
+                <div class="recent-content">
+                    <div class="recent-text">쿠키의 귀여운 모습</div>
+                    <div class="recent-date">2025.06.15 생성</div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <!-- 하단 네비게이션 -->
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text active">홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">❤️</div>
+                <div class="nav-text">입양</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <div class="nav-text">등록</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <div class="nav-text">제보</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-text">설정</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 유기동물 선택 모달 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-item" data-animal="초코">
+                <div class="modal-animal-image">이미지</div>
+                <div class="modal-animal-info">
+                    <div class="modal-animal-name">초코 (골든 리트리버)</div>
+                    <div class="modal-animal-details">2살 / 수컷 / 포항 보호소</div>
+                </div>
+            </div>
+            <div class="modal-item" data-animal="옐화">
+                <div class="modal-animal-image">이미지</div>
+                <div class="modal-animal-info">
+                    <div class="modal-animal-name">옐화 (믹스)</div>
+                    <div class="modal-animal-details">3살 / 수컷 / 포항 보호소</div>
+                </div>
+            </div>
+            <div class="modal-item" data-animal="공주">
+                <div class="modal-animal-image">이미지</div>
+                <div class="modal-animal-info">
+                    <div class="modal-animal-name">공주 (코숏)</div>
+                    <div class="modal-animal-details">1살 / 암컷 / 포항 보호소</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedTemplate = null;
+        let selectedAnimal = null;
+
+        // 뒤로가기 버튼 클릭 이벤트
+        document.querySelector('.back-arrow').addEventListener('click', () => {
+            // alert('이전 페이지로 이동합니다.');
+            window.location.href = '1)main_frame.html';
+        });
+
+        // 템플릿 선택 기능
+        document.getElementById('cuteTemplate').addEventListener('click', () => {
+            selectTemplate('cute');
+        });
+
+        document.getElementById('emotionalTemplate').addEventListener('click', () => {
+            selectTemplate('emotional');
+        });
+
+        function selectTemplate(type) {
+            // 기존 선택 제거
+            document.querySelectorAll('.template-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // 새로운 선택 적용
+            if (type === 'cute') {
+                document.getElementById('cuteTemplate').classList.add('selected');
+                selectedTemplate = 'cute';
+            } else if (type === 'emotional') {
+                document.getElementById('emotionalTemplate').classList.add('selected');
+                selectedTemplate = 'emotional';
+            }
+        }
+
+        // 유기동물 선택 모달 열기
+        document.getElementById('animalSelector').addEventListener('click', () => {
+            document.getElementById('modalOverlay').style.display = 'flex';
+        });
+
+        // 변경 버튼 클릭 시에도 모달 열기
+        document.querySelector('.change-button').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('modalOverlay').style.display = 'flex';
+        });
+
+        // 모달 배경 클릭 시 닫기
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                document.getElementById('modalOverlay').style.display = 'none';
+            }
+        });
+
+        // 모달 내 동물 선택
+        document.querySelectorAll('.modal-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // 기존 선택 제거
+                document.querySelectorAll('.modal-item').forEach(modalItem => {
+                    modalItem.classList.remove('selected');
+                });
+
+                // 새로운 선택 적용
+                item.classList.add('selected');
+                selectedAnimal = item.dataset.animal;
+
+                // 선택된 동물 정보 업데이트
+                const animalName = item.querySelector('.modal-animal-name').textContent;
+                const animalDetails = item.querySelector('.modal-animal-details').textContent;
+                
+                document.querySelector('.animal-name').textContent = animalName;
+                document.querySelector('.animal-details').textContent = animalDetails;
+
+                // 1초 후 모달 닫기
+                setTimeout(() => {
+                    document.getElementById('modalOverlay').style.display = 'none';
+                }, 1000);
+            });
+        });
+
+        // 사진 자동 보정 탭 클릭 이벤트
+        document.getElementById('photoTab').addEventListener('click', () => {
+            alert('pic_AI1 페이지로 이동합니다.');
+            // window.location.href = 'pic_AI1.html'; // 실제 구현 시 사용
+        });
+
+        // 생성 버튼 클릭 이벤트
+        document.getElementById('generateButton').addEventListener('click', () => {
+            if (!selectedTemplate) {
+                alert('릴스 템플릿을 선택해주세요.');
+                return;
+            }
+            if (!selectedAnimal) {
+                alert('유기동물을 선택해주세요.');
+                return;
+            }
+            alert('릴스 생성 중...');
+        });
+
+        // 버튼 클릭 이벤트들
+        document.querySelector('.download-button').addEventListener('click', () => {
+            alert('다운로드 기능');
+        });
+
+        document.querySelector('.share-button').addEventListener('click', () => {
+            alert('공유 기능');
+        });
+
+        // 네비게이션 클릭 이벤트들
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const text = item.querySelector('.nav-text').textContent;
+                alert(`${text} 페이지로 이동`);
+            });
+        });
+    </script>
+
+</body></html>
