@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유기동물 제보</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FEFDF6;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        .frame {
+            width: 393px;
+            height: 100%;
+            margin: 0 auto;
+            background-color: #FEFDF6;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 14px;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 20px;
+            color: #000;
+        }
+
+        .main-content {
+            padding: 20px;
+            padding-bottom: 80px; /* 하단 네비게이션 공간 확보 */
+        }
+        
+        .form-section {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .upload-area {
+            border: 2px dashed #D9D9D9;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            color: #A0A0A0;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .uploaded-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .location-info {
+            background-color: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+            position: relative;
+        }
+
+        .location-icon {
+            color: #CA7842;
+            margin-right: 8px;
+        }
+
+        .map-container {
+            height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background-color: #CA7842;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #b76c3d;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #FEFDF6;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #CA7842;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* 하단 네비게이션 스타일 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 393px;
+            height: 65px;
+            background: #FFFFFF;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+
+        .nav-text {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .nav-text.active {
+            color: #4B352A;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <!-- 헤더 섹션 -->
+        <header class="header">
+            <button class="back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="header-title" style="position: absolute; left: 60px;">유기동물 제보</h1>
+        </header>
+
+        <div class="main-content">
+            <!-- 사진 촬영 섹션 -->
+            <div class="form-section">
+                <h2 class="section-title">사진 촬영</h2>
+                <label for="imageUpload" class="upload-area">
+                    <input type="file" id="imageUpload" class="hidden" accept="image/*">
+                    <div id="uploadPlaceholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.86-1.291A2 2 0 0110.457 4h3.085a2 2 0 011.664.89l.86 1.291A2 2 0 0018.07 7h.93a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <p>사진을 촬영하거나 선택해주세요</p>
+                    </div>
+                    <img id="imagePreview" class="hidden uploaded-image mx-auto" src="#" alt="Image Preview">
+                </label>
+            </div>
+
+            <!-- 발견 위치 섹션 -->
+            <div class="form-section">
+                <h2 class="section-title">발견 위치</h2>
+                <div class="location-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 location-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    </svg>
+                    <p id="locationText">위치 정보를 불러오는 중...</p>
+                    <button class="ml-auto text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="map" class="map-container"></div>
+            </div>
+
+            <!-- 상세 설명 섹션 -->
+            <div class="form-section">
+                <h2 class="section-title">상세 설명</h2>
+                <textarea id="detailTextarea" placeholder="발견한 동물의 특징, 상태 등을 자세히 적어주세요."></textarea>
+                <div class="char-count" id="charCount">0/500자</div>
+            </div>
+            
+            <button id="submitButton" class="submit-button">제출하기</button>
+        </div>
+
+        <!-- 하단 네비게이션 -->
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text">홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">❤️</div>
+                <div class="nav-text">입양</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <div class="nav-text">등록</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <div class="nav-text active">제보</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-text">설정</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 팝업 모달 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>감사합니다</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const submitButton = document.getElementById('submitButton');
+            const modal = document.getElementById('myModal');
+            const mapContainer = document.getElementById('map');
+            const locationText = document.getElementById('locationText');
+            const imageUpload = document.getElementById('imageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+            const detailTextarea = document.getElementById('detailTextarea');
+            const charCount = document.getElementById('charCount');
+
+            if (submitButton) {
+                submitButton.addEventListener('click', () => {
+                    modal.style.display = 'flex';
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        // 팝업이 사라진 후 모든 입력 필드 초기화
+                        resetForm();
+                    }, 2000);
+                });
+            }
+
+            // 입력 필드 초기화 함수
+            function resetForm() {
+                // 이미지 초기화
+                imageUpload.value = '';
+                imagePreview.src = '#';
+                imagePreview.classList.add('hidden');
+                uploadPlaceholder.classList.remove('hidden');
+
+                // 텍스트 영역 초기화
+                detailTextarea.value = '';
+                charCount.textContent = '0/500자';
+
+                // 위치 정보 초기화 (선택사항, 필요에 따라 조정 가능)
+                locationText.textContent = '위치 정보를 불러오는 중...';
+                // 지도는 초기화하지 않고 그대로 둡니다.
+            }
+
+            // 사진 업로드 기능
+            if (imageUpload) {
+                imageUpload.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            imagePreview.src = e.target.result;
+                            imagePreview.classList.remove('hidden');
+                            uploadPlaceholder.classList.add('hidden');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // 글자 수 세기 기능
+            if (detailTextarea) {
+                detailTextarea.addEventListener('input', () => {
+                    const maxLength = 500;
+                    const currentLength = detailTextarea.value.length;
+                    charCount.textContent = `${currentLength}/${maxLength}자`;
+                    if (currentLength > maxLength) {
+                        detailTextarea.value = detailTextarea.value.substring(0, maxLength);
+                        charCount.textContent = `${maxLength}/${maxLength}자`;
+                    }
+                });
+            }
+
+
+            // 지도 API 콜백 함수
+            window.initMap = function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            
+                            // Geocoding API를 사용해 좌표를 주소로 변환
+                            const apiKey = 'AIzaSyDl6eqaUXP1P0oY2kXZV_vXFh4PdnSO7eM';
+                            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}&language=ko`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.results && data.results[0]) {
+                                        const address = data.results[0].formatted_address;
+                                        locationText.textContent = address;
+                                    } else {
+                                        locationText.textContent = '주소를 찾을 수 없습니다.';
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching address:', error);
+                                    locationText.textContent = '위치 정보를 가져오는 데 실패했습니다.';
+                                });
+
+                            // 지도에 현재 위치 표시
+                            renderMap({ lat, lng });
+                        },
+                        (error) => {
+                            console.error('Error getting location:', error);
+                            locationText.textContent = '위치 정보를 가져오는 데 실패했습니다.';
+                            renderMap({ lat: 35.888, lng: 128.61 });
+                        }
+                    );
+                } else {
+                    locationText.textContent = '위치 정보를 사용할 수 없습니다.';
+                    renderMap({ lat: 35.888, lng: 128.61 });
+                }
+            }
+
+            // 지도를 렌더링하는 함수 (좌표를 받아 지도 생성)
+            function renderMap(location) {
+                const map = new google.maps.Map(mapContainer, {
+                    zoom: 15,
+                    center: location,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    mapTypeControl: false,
+                    zoomControl: false
+                });
+
+                // 지도에 마커 추가
+                new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    title: '발견 위치'
+                });
+            }
+
+            // 구글 지도 API 스크립트를 동적으로 로드
+            const apiKey = 'AIzaSyDl6eqaUXP1P0oY2kXZV_vXFh4PdnSO7eM'; // 여기에 본인의 API 키를 입력하세요.
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+            script.async = true;
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>

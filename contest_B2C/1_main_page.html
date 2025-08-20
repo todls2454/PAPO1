@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 페이지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FEFDF6;
+            width: 393px;
+            height: 1228px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #FEFDF6;
+        }
+        
+        /* Header hero image */
+        .hero-image {
+            position: absolute;
+            top: 35px;
+            left: 99px;
+            width: 196px;
+            height: 211px;
+            background-color: #D9D9D9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000000;
+        }
+        
+        /* AI recommendation button */
+        .ai-button {
+            position: absolute;
+            top: 268px;
+            left: 17px;
+            width: 359px;
+            height: 47px;
+            background-color: #CA7842;
+            border-radius: 10px;
+            box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .ai-button:hover {
+            background-color: #B8693A;
+        }
+        
+        .ai-icon {
+            width: 22px;
+            height: 22px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .ai-button-text {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        /* Top navigation icons and text */
+        .top-nav {
+            position: absolute;
+            top: 354px;
+            left: 36px;
+            width: 321.56px;
+            height: 50px;
+        }
+        
+        .nav-item {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 60px;
+        }
+        
+        .nav-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #B2CD9C;
+            border-radius: 4px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-text {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .nav-item-1 {
+            top: 3px;
+            left: 0px;
+        }
+        
+        .nav-item-2 {
+            top: 3px;
+            left: 98px;
+        }
+        
+        .nav-item-3 {
+            top: 3px;
+            left: 190px;
+        }
+        
+        .nav-item-4 {
+            top: 0px;
+            left: 268px;
+        }
+        
+        /* Category links */
+        .category-links {
+            position: absolute;
+            top: 417px;
+            left: 31px;
+            width: 332px;
+            height: 14px;
+            display: none; /* 중복되므로 숨김 */
+        }
+        
+        .category-link {
+            position: absolute;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .category-report {
+            left: 0px;
+            width: 71px;
+        }
+        
+        .category-walk {
+            left: 106px;
+            width: 55px;
+        }
+        
+        .category-shelter {
+            left: 196px;
+            width: 55px;
+        }
+        
+        .category-shop {
+            left: 286px;
+            width: 46px;
+        }
+        
+        /* Recent adoption section */
+        .recent-title {
+            position: absolute;
+            top: 460px;
+            left: 17px;
+            width: 59px;
+            height: 18px;
+            font-family: 'Inter';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.2102272033691406em;
+            color: #000000;
+        }
+        
+        .more-link {
+            position: absolute;
+            top: 461px;
+            left: 342px;
+            width: 36px;
+            height: 16px;
+            font-family: 'Inter';
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.2102272327129657em;
+            color: #2F88FF;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        /* Pet cards */
+        .pet-card {
+            position: absolute;
+            width: 174px;
+            height: 169px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(241,241,241,0.6);
+            border-radius: 5px;
+            box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+        
+        .pet-card-1 {
+            top: 494px;
+            left: 17px;
+        }
+        
+        .pet-card-2 {
+            top: 494px;
+            left: 204px;
+        }
+        
+        .pet-card-3 {
+            top: 677px;
+            left: 17px;
+        }
+        
+        .pet-card-4 {
+            top: 677px;
+            left: 204px;
+        }
+        
+        .pet-image {
+            width: 174px;
+            height: 129px;
+            background-color: #D9D9D9;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000000;
+        }
+        
+        .pet-info {
+            padding: 7px;
+        }
+        
+        .pet-name {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 3px;
+        }
+        
+        .pet-breed {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        /* Photo placeholder at bottom right */
+        .photo-placeholder {
+            position: absolute;
+            top: 733px;
+            left: 93px;
+            width: 21px;
+            height: 14px;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            text-align: center;
+            color: #000000;
+        }
+        
+        /* Shelter section */
+        .shelter-title {
+            position: absolute;
+            top: 873px;
+            left: 17px;
+            width: 73px;
+            height: 18px;
+            font-family: 'Inter';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.2102272033691406em;
+            color: #000000;
+        }
+        
+        .map-link {
+            position: absolute;
+            top: 874px;
+            left: 330px;
+            width: 48px;
+            height: 16px;
+            font-family: 'Inter';
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.2102272327129657em;
+            color: #2F88FF;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        /* Shelter cards */
+        .shelter-card {
+            position: absolute;
+            width: 361px;
+            height: 73px;
+            background: rgba(217, 217, 217, 0);
+            border: 0.3px solid #D8D8D8;
+            border-radius: 10px;
+            box-shadow: 1px 1px 2px 1px rgba(244, 244, 243, 1);
+            padding: 8px 26px;
+            cursor: pointer;
+        }
+        
+        .shelter-card-1 {
+            top: 906px;
+            left: 17px;
+        }
+        
+        .shelter-card-2 {
+            top: 995px;
+            left: 17px;
+        }
+        
+        .shelter-card-3 {
+            top: 1084px;
+            left: 17px;
+        }
+        
+        .shelter-image {
+            position: absolute;
+            left: 9px;
+            top: 7px;
+            width: 58px;
+            height: 58px;
+            background-color: #D9D9D9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000000;
+        }
+        
+        .shelter-info {
+            margin-left: 75px;
+            margin-top: 5px;
+        }
+        
+        .shelter-name {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+        
+        .shelter-address {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+        
+        .shelter-distance {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #2859C5;
+        }
+        
+        /* Bottom navigation */
+        .bottom-nav {
+            position: absolute;
+            top: 1163px;
+            left: 0px;
+            width: 393px;
+            height: 65px;
+            background-color: #FFFFFF;
+        }
+        
+        .nav-home {
+            position: absolute;
+            top: 12px;
+            left: 17px;
+            width: 24px;
+            height: 24px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .nav-add {
+            position: absolute;
+            top: 12px;
+            left: 102px;
+            width: 24px;
+            height: 24px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .nav-location {
+            position: absolute;
+            top: 12px;
+            left: 184px;
+            width: 24px;
+            height: 24px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .nav-shopping {
+            position: absolute;
+            top: 12px;
+            left: 269px;
+            width: 22px;
+            height: 22px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .nav-profile {
+            position: absolute;
+            top: 12px;
+            left: 352px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #000;
+            border-radius: 2px;
+        }
+        
+        .nav-label {
+            position: absolute;
+            top: 41px;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        .nav-label-home {
+            left: 24px;
+            color: #4B352A;
+        }
+        
+        .nav-label-add {
+            left: 104px;
+        }
+        
+        .nav-label-location {
+            left: 181px;
+        }
+        
+        .nav-label-shopping {
+            left: 269px;
+        }
+        
+        .nav-label-profile {
+            left: 353px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero image -->
+        <div class="hero-image">사진</div>
+        
+        <!-- AI recommendation button -->
+        <button class="ai-button" id="aiButton">
+            <div class="ai-icon"></div>
+            <span class="ai-button-text">AI 맞춤 입양 추천받기</span>
+        </button>
+        
+        <!-- Top navigation icons -->
+        <div class="top-nav">
+            <div class="nav-item nav-item-1">
+                <div class="nav-icon"></div>
+                <span class="nav-text">유기동물 제보</span>
+            </div>
+            <div class="nav-item nav-item-2">
+                <div class="nav-icon"></div>
+                <span class="nav-text">산책길 추천</span>
+            </div>
+            <div class="nav-item nav-item-3">
+                <div class="nav-icon"></div>
+                <span class="nav-text">보호소 찾기</span>
+            </div>
+            <div class="nav-item nav-item-4" id="shopButton">
+                <div class="nav-icon"></div>
+                <span class="nav-text">병원/쇼핑</span>
+            </div>
+        </div>
+        
+        <!-- Category links -->
+        <!-- <div class="category-links">
+            <a href="#" class="category-link category-report">유기동물 제보</a>
+            <a href="#" class="category-link category-walk">산책길 추천</a>
+            <a href="#" class="category-link category-shelter">보호소 찾기</a>
+            <a href="#" class="category-link category-shop" id="shopLink">병원/쇼핑</a>
+        </div> --> <!-- 중복되므로 제거 -->
+        
+        <!-- Recent adoption section -->
+        <div class="recent-title">최근 입양</div>
+        <a href="#" class="more-link">더보기</a>
+        
+        <!-- Pet cards -->
+        <div class="pet-card pet-card-1">
+            <div class="pet-image">사진</div>
+            <div class="pet-info">
+                <div class="pet-name">백설이</div>
+                <div class="pet-breed">포메라니안 1살</div>
+            </div>
+        </div>
+        
+        <div class="pet-card pet-card-2" id="chocoCard">
+            <div class="pet-image">사진</div>
+            <div class="pet-info">
+                <div class="pet-name">루시</div>
+                <div class="pet-breed">말티즈 2살</div>
+            </div>
+        </div>
+        
+        <div class="pet-card pet-card-3">
+            <div class="pet-image">사진</div>
+            <div class="pet-info">
+                <div class="pet-name">초코</div>
+                <div class="pet-breed">포메라니안 1살</div>
+            </div>
+        </div>
+        
+        <div class="pet-card pet-card-4">
+            <div class="pet-image">사진</div>
+            <div class="pet-info">
+                <div class="pet-name">초코</div>
+                <div class="pet-breed">골든리트리버 3개월</div>
+            </div>
+        </div>
+        
+        <!-- Photo placeholder -->
+        <!-- <div class="photo-placeholder">사진</div> --> <!-- 중복되므로 제거 -->
+        
+        <!-- Shelter section -->
+        <div class="shelter-title">주변 보호소</div>
+        <a href="#" class="map-link">지도보기</a>
+        
+        <!-- Shelter cards -->
+        <div class="shelter-card shelter-card-1">
+            <div class="shelter-image">사진</div>
+            <div class="shelter-info">
+                <div class="shelter-name">강아지 천국 보호소</div>
+                <div class="shelter-address">대구광역시 북구 대학로 789</div>
+                <div class="shelter-distance">0.3km</div>
+            </div>
+        </div>
+        
+        <div class="shelter-card shelter-card-2">
+            <div class="shelter-image">사진</div>
+            <div class="shelter-info">
+                <div class="shelter-name">포항 동물 사랑 보호소</div>
+                <div class="shelter-address">포항시 북구 영일만대로 123</div>
+                <div class="shelter-distance">2.3km</div>
+            </div>
+        </div>
+        
+        <div class="shelter-card shelter-card-3">
+            <div class="shelter-image">사진</div>
+            <div class="shelter-info">
+                <div class="shelter-name">행복한 동물 보호센터</div>
+                <div class="shelter-address">경주시 외동읍 산업로 456</div>
+                <div class="shelter-distance">4.3km</div>
+            </div>
+        </div>
+        
+        <!-- Bottom navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text active">홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">❤️</div>
+                <div class="nav-text">입양</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <div class="nav-text">등록</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <div class="nav-text">제보</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-text">설정</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AI 맞춤 입양 추천 받기 버튼 클릭 시 ai_start 페이지로 이동
+        document.getElementById('aiButton').addEventListener('click', function() {
+            console.log('AI 맞춤 입양 추천 받기 클릭');
+            alert('ai_start 페이지로 이동합니다.');
+            // window.location.href = 'ai_start.html'; // ai_start 페이지 구현 후 활성화
+        });
+        
+        // 병원/쇼핑 버튼들 클릭 시 shop 페이지로 이동
+        document.getElementById('shopButton').addEventListener('click', function() {
+            console.log('병원/쇼핑 (상단 아이콘) 클릭');
+            alert('shop 페이지로 이동합니다.');
+            // window.location.href = 'shop.html'; // shop 페이지 구현 후 활성화
+        });
+        
+        // 초코 골든리트리버 카드 클릭 시 detail 페이지로 이동 (우측 상단 카드를 초코로 변경)
+        document.getElementById('chocoCard').addEventListener('click', function() {
+            console.log('초코 골든리트리버 카드 클릭');
+            alert('detail 페이지로 이동합니다.');
+            // window.location.href = 'detail.html'; // detail 페이지 구현 후 활성화
+        });
+        
+        // 기타 네비게이션 기능들
+        document.querySelector('.nav-item-1').addEventListener('click', function() {
+            alert('유기동물 제보 페이지로 이동합니다.');
+            // window.location.href = 'report.html';
+        });
+        
+        document.querySelector('.nav-item-2').addEventListener('click', function() {
+            alert('산책길 추천 페이지로 이동합니다.');
+            // window.location.href = 'walking_place.html';
+        });
+        
+        // 하단 네비게이션
+        document.querySelector('.nav-shopping').addEventListener('click', function() {
+            console.log('하단 쇼핑 버튼 클릭');
+            alert('shop 페이지로 이동합니다.');
+            // window.location.href = 'shop.html';
+        });
+    </script>
+</body>
+</html>

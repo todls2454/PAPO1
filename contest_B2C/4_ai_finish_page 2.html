@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 추천 완료</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FEFDF6;
+            width: 393px;
+            height: 605px;
+            margin: 0 auto;
+            position: relative;
+            overflow-y: auto;
+        }
+        
+        .container {
+            width: 393px;
+            height: 605px;
+            position: relative;
+            background-color: #FEFDF6;
+        }
+        
+        /* Header section */
+        .back-arrow {
+            position: absolute;
+            top: 24px;
+            left: 8px;
+            width: 12px;
+            height: 12px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+            border-left: 2px solid rgba(0, 0, 0, 0.6);
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+        
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 28.12px;
+            width: 87px;
+            height: 23.54px;
+            font-family: 'Inter';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.2102272033691406em;
+            color: #000000;
+        }
+        
+        .divider-line {
+            position: absolute;
+            top: 60px;
+            left: 0px;
+            width: 393px;
+            height: 1px;
+            background-color: #000000;
+        }
+        
+        /* Main content */
+        .completion-text {
+            position: absolute;
+            top: 100px;
+            left: 81px;
+            width: 236px;
+            height: 24px;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 1.193359375em;
+            text-align: center;
+            color: #000000;
+        }
+        
+        /* Pet cards */
+        .pet-card {
+            position: absolute;
+            width: 361px;
+            height: 107px;
+            background: rgba(217, 217, 217, 0);
+            border: 0.3px solid #D8D8D8;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pet-card-1 {
+            top: 164px;
+            left: 19px;
+        }
+        
+        .pet-card-2 {
+            top: 283px;
+            left: 19px;
+        }
+        
+        .pet-image {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            width: 83px;
+            height: 83px;
+            background-color: #D9D9D9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            text-align: center;
+            color: #000000;
+        }
+        
+        .pet-info {
+            position: absolute;
+            left: 111px;
+            top: 12px;
+        }
+        
+        .pet-name {
+            width: 126.22px;
+            height: 18.91px;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 7px;
+        }
+        
+        .pet-breed {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 17px;
+        }
+        
+        .pet-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            height: 22px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            padding: 0 13px;
+        }
+        
+        .tag-vaccination {
+            background-color: #ECF6ED;
+        }
+        
+        .tag-personality {
+            background-color: #F5F5F5;
+        }
+        
+        /* Bottom section */
+        .bottom-text {
+            position: absolute;
+            top: 430px;
+            left: 53px;
+            width: 289px;
+            height: 24px;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        .recommend-button {
+            position: absolute;
+            top: 476px;
+            left: 17px;
+            width: 359px;
+            height: 47px;
+            background-color: #CA7842;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .recommend-button:hover {
+            background-color: #B8693A;
+        }
+        
+        .robot-icon {
+            width: 22px;
+            height: 22px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .recommend-button-text {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        /* Bottom navigation */
+        .bottom-nav {
+            position: absolute;
+            top: 547.7px;
+            left: 0px;
+            width: 393px;
+            height: 57.3px;
+            background-color: #FFFFFF;
+        }
+        
+        .nav-icon {
+            position: absolute;
+            width: 22.53px;
+            height: 22.53px;
+            background-color: #000;
+            border-radius: 2px;
+        }
+        
+        .nav-home {
+            top: 9.89px;
+            left: 17.73px;
+        }
+        
+        .nav-add {
+            top: 9.89px;
+            left: 102.73px;
+        }
+        
+        .nav-location {
+            top: 9.89px;
+            left: 184.73px;
+        }
+        
+        .nav-shopping {
+            top: 9.95px;
+            left: 269.67px;
+            width: 20.66px;
+            height: 20.66px;
+        }
+        
+        .nav-profile {
+            top: 9.89px;
+            left: 352.73px;
+            border: 2px solid #000;
+            background: transparent;
+        }
+        
+        .nav-label {
+            position: absolute;
+            top: 36.14px;
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        .nav-label-home {
+            left: 24px;
+            color: #4B352A;
+        }
+        
+        .nav-label-add {
+            left: 104px;
+        }
+        
+        .nav-label-location {
+            left: 181px;
+        }
+        
+        .nav-label-shopping {
+            left: 269px;
+        }
+        
+        .nav-label-profile {
+            left: 353px;
+        }
+        
+        /* Actual images */
+        .pet-image-1 {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="83" height="84" viewBox="0 0 83 84" fill="none"><rect width="83" height="84" rx="8" fill="%23D9D9D9"/></svg>');
+            background-size: cover;
+        }
+        
+        .pet-image-2 {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="83" height="83" viewBox="0 0 83 83" fill="none"><rect width="83" height="83" rx="8" fill="%23D9D9D9"/></svg>');
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="back-arrow" onclick="goBack()"></div>
+        <div class="title">AI 맞춤 입양</div>
+        <div class="divider-line"></div>
+        
+        <!-- Main content -->
+        <div class="completion-text">AI 추천이 완료 되었습니다 🎉</div>
+        
+        <!-- Pet Card 1 -->
+        <div class="pet-card pet-card-1">
+            <div class="pet-image pet-image-1">사진</div>
+            <div class="pet-info">
+                <div class="pet-name">백설이</div>
+                <div class="pet-breed">포메라니안 1세</div>
+                <div class="pet-tags">
+                    <div class="tag tag-vaccination">예방접종 완료</div>
+                    <div class="tag tag-personality">친근한</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pet Card 2 -->
+        <div class="pet-card pet-card-2">
+            <div class="pet-image pet-image-2">사진</div>
+            <div class="pet-info">
+                <div class="pet-name">루시</div>
+                <div class="pet-breed">말티즈 2세</div>
+                <div class="pet-tags">
+                    <div class="tag tag-vaccination">예방접종 완료</div>
+                    <div class="tag tag-personality">활발한</div>
+                    <div class="tag tag-personality">친근한</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom text -->
+        <div class="bottom-text">다른 친구들을 더 만나고 싶으신가요?</div>
+        
+        <!-- Recommend button -->
+        <button class="recommend-button" onclick="getMoreRecommendations()">
+            <div class="robot-icon"></div>
+            <span class="recommend-button-text">AI 맞춤 입양 추천받기</span>
+        </button>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-icon nav-home"></div>
+            <div class="nav-icon nav-add"></div>
+            <div class="nav-icon nav-location"></div>
+            <div class="nav-icon nav-shopping"></div>
+            <div class="nav-icon nav-profile"></div>
+            
+            <span class="nav-label nav-label-home">홈</span>
+            <span class="nav-label nav-label-add">제보</span>
+            <span class="nav-label nav-label-location">보호소</span>
+            <span class="nav-label nav-label-shopping">쇼핑</span>
+            <span class="nav-label nav-label-profile">마이</span>
+        </div>
+    </div>
+
+    <script>
+        // Back button
+        function goBack() {
+            alert('이전 페이지로 돌아갑니다.');
+            // window.history.back();
+        }
+        
+        // Get more recommendations
+        function getMoreRecommendations() {
+            alert('AI 맞춤 입양 페이지로 이동합니다.');
+            // window.location.href = 'ai_start.html';
+        }
+        
+        // Home navigation
+        document.querySelector('.nav-home').addEventListener('click', function() {
+            alert('main 페이지로 이동합니다.');
+            // window.location.href = 'main.html';
+        });
+        
+        // Add celebration effect on page load
+        window.addEventListener('load', function() {
+            console.log('AI 추천이 완료되었습니다! 🎉');
+            
+            // Add subtle animation to completion text
+            const completionText = document.querySelector('.completion-text');
+            completionText.style.animation = 'fadeInScale 1s ease-out';
+            
+            // Add CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInScale {
+                    0% {
+                        opacity: 0;
+                        transform: scale(0.9);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
