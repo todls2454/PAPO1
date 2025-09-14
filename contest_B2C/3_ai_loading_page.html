@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유기동물 제보</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FEFDF6;
+            margin: 0 auto;
+            position: relative;
+            /* 9:16 비율을 위한 설정 */
+            max-width: 395px;
+            height: 702.22px; /* 395 * 16 / 9 */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background-color: #FEFDF6;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 헤더 스타일 */
+        .header {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 24px;
+        }
+        
+        .header-title {
+            font-size: 20px; /* 예시와 동일한 크기로 변경 */
+            font-weight: 700;
+            color: #000;
+            margin-left: 20px; /* 제목을 왼쪽으로 치우치도록 조정 */
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 0;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .form-section {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .upload-area {
+            border: 2px dashed #D9D9D9;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            color: #A0A0A0;
+            cursor: pointer;
+        }
+
+        .location-info {
+            background-color: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .location-icon {
+            color: #CA7842;
+            margin-right: 8px;
+        }
+
+        .map-container {
+            height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background-color: #CA7842;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #b76c3d;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #FEFDF6;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #CA7842;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 섹션 -->
+        <header class="header">
+            <button class="back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="header-title">유기동물 제보</h1>
+        </header>
+
+        <!-- 사진 촬영 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">사진 촬영</h2>
+            <div class="upload-area">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.86-1.291A2 2 0 0110.457 4h3.085a2 2 0 011.664.89l.86 1.291A2 2 0 0018.07 7h.93a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <p>사진을 촬영하거나 선택해주세요</p>
+            </div>
+        </div>
+
+        <!-- 발견 위치 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">발견 위치</h2>
+            <div class="location-info">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 location-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                </svg>
+                <p>위치 정보를 불러오는 중...</p>
+                <button class="ml-auto text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <div id="map" class="map-container"></div>
+        </div>
+
+        <!-- 상세 설명 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">상세 설명</h2>
+            <textarea placeholder="발견한 동물의 특징, 상태 등을 자세히 적어주세요."></textarea>
+            <div class="char-count">0/500자</div>
+        </div>
+        
+        <button id="submitButton" class="submit-button">제출하기</button>
+    </div>
+
+    <!-- 팝업 모달 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>감사합니다</p>
+        </div>
+    </div>
+
+    <script>
+        // DOMContentLoaded 이벤트 리스너를 사용하여 HTML이 로드된 후 스크립트가 실행되도록 함
+        document.addEventListener('DOMContentLoaded', () => {
+            const submitButton = document.getElementById('submitButton');
+            const modal = document.getElementById('myModal');
+            const mapContainer = document.getElementById('map');
+
+            if (submitButton) {
+                submitButton.addEventListener('click', () => {
+                    modal.style.display = 'flex';
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                    }, 2000);
+                });
+            }
+
+            // 지도 초기화 함수
+            function initMap() {
+                // 사용자가 요청한 이미지에 나온 지도 위치를 기반으로 경북대학교 대구캠퍼스 부근의 좌표를 설정
+                const location = { lat: 35.888, lng: 128.61 };
+                const map = new google.maps.Map(mapContainer, {
+                    zoom: 15,
+                    center: location,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    mapTypeControl: false,
+                    zoomControl: false
+                });
+
+                // 지도에 마커 추가
+                new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    title: '발견 위치'
+                });
+            }
+
+            // 구글 지도 API 스크립트를 동적으로 로드
+            const apiKey = 'AIzaSyDl6eqaUXP1P0oY2kXZV_vXFh4PdnSO7eM'; // 여기에 본인의 API 키를 입력하세요.
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+            script.async = true;
+            document.head.appendChild(script);
+
+            // API 로드 콜백 함수를 전역 범위에 노출
+            window.initMap = initMap;
+        });
+    </script>
+</body>
+</html>

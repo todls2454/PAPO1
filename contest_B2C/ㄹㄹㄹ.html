@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PaoPao 입양</title>
+  <!-- Pretendard (CDN) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <style>
+    :root{
+      --bg:#FEFDF6;
+      --card:#FFFFFF;
+      --text:#2A2A2A;
+      --muted:#6F6F6F;
+      --brand:#C98B5E;    /* 버튼/아이콘 포인트 */
+      --brand-dark:#6B4A39;
+      --line:#EBE7DF;
+      --shadow:0 8px 24px rgba(0,0,0,.06);
+      --radius:16px;
+      --radius-sm:12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Pretendard,'Apple SD Gothic Neo',system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans KR',sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    .app{
+      max-width:393px;
+      margin:0 auto;
+      min-height:100dvh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* 상단 브랜드 카드 */
+    .hero{
+      background:var(--card);
+      border-radius:24px;
+      margin:16px 12px 10px;
+      padding:28px 20px;
+      box-shadow:var(--shadow);
+    }
+    .hero__logo{
+      width:100%;
+      aspect-ratio: 16/9;
+      border-radius:18px;
+      background:
+        radial-gradient(ellipse at 50% 20%, #E8C7A7 0 40%, transparent 41%),
+        radial-gradient(circle at 65% 48%, #E8C7A7 0 18%, transparent 19%),
+        radial-gradient(circle at 35% 48%, #E8C7A7 0 18%, transparent 19%),
+        radial-gradient(circle at 50% 68%, #E8C7A7 0 18%, transparent 19%),
+        radial-gradient(circle at 50% 50%, #D6A883 0 100%);
+      display:grid;
+      place-items:center;
+      color:#6B4A39;
+      font-weight:800;
+      letter-spacing:.5px;
+      box-shadow: inset 0 0 0 8px #E6D6C6, inset 0 0 0 16px #F5EADF;
+    }
+    .hero__logo span{
+      display:block;
+      text-align:center;
+      font-size:44px;
+      line-height:1.05;
+    }
+
+    .cta{
+      margin-top:16px;
+      width:100%;
+      background:var(--brand);
+      color:#fff;
+      border:0;
+      border-radius:14px;
+      padding:14px 16px;
+      font-weight:700;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      box-shadow:0 10px 20px rgba(201,139,94,.25);
+      cursor:pointer;
+    }
+    .cta:active{transform:translateY(1px)}
+
+    /* 퀵 아이콘 */
+    .quick{
+      display:grid;
+      grid-template-columns: repeat(4,1fr);
+      gap:8px;
+      margin:12px;
+      padding:12px 6px 4px;
+      border-top:1px solid var(--line);
+    }
+    .quick__item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      padding:8px 4px;
+    }
+    .quick__icon{
+      width:44px;height:44px;border-radius:12px;
+      background:#F6F3EC;
+      display:grid;place-items:center;
+      font-size:20px;color:var(--brand-dark);
+      box-shadow: inset 0 0 0 1px #E8E2D7;
+    }
+    .quick__label{font-size:12px;color:#4b4b4b}
+
+    /* 섹션 공통 */
+    .section{padding:4px 12px 0}
+    .section__head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 2px 8px;
+    }
+    .title{font-weight:800;font-size:16px}
+    .more{font-size:12px;color:#7A7A7A;text-decoration:none}
+
+    /* 최근 입양 그리드 */
+    .grid{
+      display:grid;gap:10px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius-sm);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card__img{
+      width:100%;aspect-ratio: 1/1;object-fit:cover;display:block;
+    }
+    .card__body{padding:10px 12px}
+    .pet__name{font-weight:800;font-size:14px}
+    .pet__meta{font-size:12px;color:var(--muted);margin-top:3px}
+
+    /* 보호소 리스트 */
+    .list{display:flex;flex-direction:column;gap:10px}
+    .list-item{
+      display:flex;gap:12px;align-items:center;
+      background:var(--card);border-radius:14px;padding:10px;box-shadow:var(--shadow);
+    }
+    .thumb{
+      width:60px;height:60px;border-radius:12px;object-fit:cover;background:#EEE;
+    }
+    .li-body{flex:1;min-width:0}
+    .li-title{font-weight:700;font-size:13px}
+    .li-sub{font-size:12px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .li-meta{display:flex;align-items:center;gap:6px;margin-top:6px}
+    .dot{width:6px;height:6px;border-radius:50%;background:#4BA3FF}
+    .km{font-size:12px;color:#4BA3FF}
+
+    .map-link{font-size:12px;color:#7A7A7A;text-decoration:none}
+
+    /* 하단 탭바 */
+    .tabbar{
+      position:sticky;bottom:0;left:0;right:0;
+      max-width:393px;margin:14px auto 0;
+      background:var(--card);border-top:1px solid var(--line);
+      display:grid;grid-template-columns:repeat(4,1fr);
+      padding:8px 0;border-radius:16px 16px 0 0;
+      box-shadow:0 -6px 16px rgba(0,0,0,.04);
+    }
+    .tab{
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+      color:#7A7A7A;font-size:11px;padding:6px 0;text-decoration:none;
+    }
+    .tab .ico{font-size:20px}
+    .tab--active{color:var(--brand-dark);font-weight:700}
+    /* 작은 화면 대응 */
+    @media (max-width:360px){
+      .quick{gap:4px}
+      .quick__icon{width:40px;height:40px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- 상단 로고 카드 -->
+    <section class="hero">
+      <div class="hero__logo" aria-label="PaoPao 로고">
+        <span>🐾<br>Pao<br>Pao</span>
+      </div>
+      <button class="cta" onclick="alert('간단한 문답으로 맞춤 추천을 시작할게!')">
+        <span>🤖</span> <span>AI 맞춤 입양 추천받기</span>
+      </button>
+    </section>
+
+    <!-- 퀵 기능 -->
+    <nav class="quick" aria-label="주요 기능">
+      <a class="quick__item" href="#">
+        <div class="quick__icon">📝</div>
+        <div class="quick__label">유기동물 제보</div>
+      </a>
+      <a class="quick__item" href="#">
+        <div class="quick__icon">🌲</div>
+        <div class="quick__label">산책길 추천</div>
+      </a>
+      <a class="quick__item" href="#">
+        <div class="quick__icon">📍</div>
+        <div class="quick__label">보호소 찾기</div>
+      </a>
+      <a class="quick__item" href="#">
+        <div class="quick__icon">🛍️</div>
+        <div class="quick__label">병원/쇼핑</div>
+      </a>
+    </nav>
+
+    <!-- 최근 입양 -->
+    <section class="section">
+      <div class="section__head">
+        <h2 class="title">최근 입양</h2>
+        <a class="more" href="#">더보기</a>
+      </div>
+
+      <div class="grid">
+        <!-- card 1 -->
+        <article class="card">
+          <img class="card__img" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=800&auto=format&fit=crop" alt="포메라니안 백설이" />
+          <div class="card__body">
+            <div class="pet__name">백설이</div>
+            <div class="pet__meta">포메라니안 · 1살</div>
+          </div>
+        </article>
+        <!-- card 2 -->
+        <article class="card">
+          <img class="card__img" src="https://images.unsplash.com/photo-1558944351-cf21a4d3b6d3?q=80&w=800&auto=format&fit=crop" alt="말티즈 루시" />
+          <div class="card__body">
+            <div class="pet__name">루시</div>
+            <div class="pet__meta">말티즈 · 2살</div>
+          </div>
+        </article>
+        <!-- card 3 -->
+        <article class="card">
+          <img class="card__img" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=800&auto=format&fit=crop" alt="포메라니안 초코" />
+          <div class="card__body">
+            <div class="pet__name">초코</div>
+            <div class="pet__meta">포메라니안 · 1살</div>
+          </div>
+        </article>
+        <!-- card 4 -->
+        <article class="card">
+          <img class="card__img" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=800&auto=format&fit=crop" alt="골든리트리버 초코" />
+          <div class="card__body">
+            <div class="pet__name">초코</div>
+            <div class="pet__meta">골든리트리버 · 3개월</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 주변 보호소 -->
+    <section class="section">
+      <div class="section__head">
+        <h2 class="title">주변 보호소</h2>
+        <a class="map-link" href="#">지도보기</a>
+      </div>
+
+      <div class="list">
+        <article class="list-item">
+          <img class="thumb" src="https://images.unsplash.com/photo-1584589167171-541ce45f1ee1?q=80&w=600&auto=format&fit=crop" alt="행복한 동물 보호센터" />
+          <div class="li-body">
+            <div class="li-title">행복한 동물 보호센터</div>
+            <div class="li-sub">경주시 외동읍 산업로 456</div>
+            <div class="li-meta"><span class="dot"></span><span class="km">0.43km</span></div>
+          </div>
+        </article>
+
+        <article class="list-item">
+          <img class="thumb" src="https://images.unsplash.com/photo-1600047509807-ba8f99ff8d05?q=80&w=600&auto=format&fit=crop" alt="포항 동물 사랑 보호소" />
+          <div class="li-body">
+            <div class="li-title">포항 동물 사랑 보호소</div>
+            <div class="li-sub">포항시 북구 양밀안대로 123</div>
+            <div class="li-meta"><span class="dot"></span><span class="km">2.3km</span></div>
+          </div>
+        </article>
+
+        <article class="list-item">
+          <img class="thumb" src="https://images.unsplash.com/photo-1590502593747-42a9966c5a5f?q=80&w=600&auto=format&fit=crop" alt="강아지 천국 보호소" />
+          <div class="li-body">
+            <div class="li-title">강아지 천국 보호소</div>
+            <div class="li-sub">대구시 북구 대현로 789</div>
+            <div class="li-meta"><span class="dot"></span><span class="km">0.3km</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 하단 탭바 -->
+    <nav class="tabbar" aria-label="하단 내비게이션">
+      <a class="tab tab--active" href="#">
+        <div class="ico">🏠</div>
+        <div>홈</div>
+      </a>
+      <a class="tab" href="#">
+        <div class="ico">❤️</div>
+        <div>입양</div>
+      </a>
+      <a class="tab" href="#">
+        <div class="ico">🏠‍⬛</div>
+        <div>보호소</div>
+      </a>
+      <a class="tab" href="#">
+        <div class="ico">👤</div>
+        <div>마이</div>
+      </a>
+    </nav>
+
+  </div>
+</body>
+</html>
