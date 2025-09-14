@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼핑</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #FEFDF6;
+            width: 393px;
+            height: 725px;
+            margin: 0 auto;
+            position: relative;
+            overflow-y: auto;
+        }
+        
+        .container {
+            width: 393px;
+            height: 724px;
+            position: relative;
+            background-color: #FEFDF6;
+        }
+        
+        /* Header section */
+        .back-arrow {
+            position: absolute;
+            top: 24px;
+            left: 12px;
+            width: 12px;
+            height: 12px;
+            border-bottom: 2px solid #000000;
+            border-left: 2px solid #000000;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+        
+        .title {
+            position: absolute;
+            top: 19px;
+            left: 28.12px;
+            width: 28px;
+            height: 18px;
+            font-family: 'Inter';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.2102272033691406em;
+            color: #000000;
+        }
+        
+        .divider-line {
+            position: absolute;
+            top: 53px;
+            left: 0px;
+            width: 393px;
+            height: 1px;
+            background-color: #000000;
+        }
+        
+        /* Filter buttons */
+        .filter-container {
+            position: absolute;
+            top: 69px;
+            left: 27px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .filter-button {
+            width: 65px;
+            height: 35px;
+            background: rgba(217, 217, 217, 0);
+            border: 0.5px solid #000000;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.193359375em;
+            color: #000000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button.active {
+            background-color: #CA7842;
+            color: #FFFFFF;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .dropdown-arrow {
+            position: absolute;
+            top: 83px;
+            left: 77px;
+            width: 7px;
+            height: 6px;
+            background-color: #000000;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+        }
+        
+        /* Product cards */
+        .product-card {
+            position: absolute;
+            width: 345px;
+            left: 27px;
+            display: flex;
+            gap: 17px;
+            align-items: flex-start;
+        }
+        
+        .product-card-1 {
+            top: 133px;
+        }
+        
+        .product-card-2 {
+            top: 288px;
+        }
+        
+        .product-card-3 {
+            top: 439px;
+        }
+        
+        .product-image {
+            width: 113px;
+            height: 115px;
+            background-color: #D9D9D9;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.193359375em;
+            color: #000000;
+            flex-shrink: 0;
+        }
+        
+        .product-info {
+            flex: 1;
+            padding-top: 7px;
+        }
+        
+        .product-name {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+        
+        .product-brand {
+            font-family: 'Pretendard';
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+            margin-bottom: 14px;
+        }
+        
+        .product-price {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 17px;
+            line-height: 1.193359375em;
+            color: #CA7842;
+            margin-bottom: 14px;
+        }
+        
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .product-tag {
+            font-family: 'Pretendard';
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 1.193359375em;
+            color: #000000;
+        }
+        
+        /* Divider lines */
+        .product-divider {
+            position: absolute;
+            left: 27px;
+            width: 345px;
+            height: 1px;
+            background-color: #000000;
+        }
+        
+        .divider-1 {
+            top: 268px;
+        }
+        
+        .divider-2 {
+            top: 419px;
+        }
+        
+        .divider-3 {
+            top: 572px;
+        }
+        
+        /* Cart button */
+        .cart-button {
+            position: absolute;
+            top: 588px;
+            left: 17px;
+            width: 359px;
+            height: 47px;
+            background-color: #CA7842;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.193359375em;
+            color: #000000;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cart-button:hover {
+            background-color: #B8693A;
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: absolute;
+            left: 0px;
+            top: 584px;
+            width: 393px;
+            height: 65px;
+            background: #FFFFFF;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+
+        .nav-text {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .nav-text.active {
+            color: #4B352A;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="back-arrow" onclick="goBack()"></div>
+        <div class="title">쇼핑</div>
+        <div class="divider-line"></div>
+        
+        <!-- Filter buttons -->
+        <div class="filter-container">
+            <div class="filter-button filter-dropdown active" id="filterAll">
+                전체
+                <div class="dropdown-arrow"></div>
+            </div>
+            <div class="filter-button" id="filterPohang">포항</div>
+            <div class="filter-button" id="filterGangneung">강릉</div>
+            <div class="filter-button" id="filterAndong">안동</div>
+        </div>
+        
+        <!-- Product Card 1 -->
+        <div class="product-card product-card-1">
+            <img src="img/t1.png" alt="원본 이미지" class="product-image">
+            <div class="product-info">
+                <div class="product-name">웹포 초경량 베이직 1.5kg</div>
+                <div class="product-brand">포항 도그 푸드</div>
+                <div class="product-price">18,000원</div>
+                <div class="product-tags">
+                    <span class="product-tag">#소형견전용</span>
+                    <span class="product-tag">#베이직</span>
+                    <span class="product-tag">#알러지프리</span>
+                </div>
+            </div>
+        </div>
+        <div class="product-divider divider-1"></div>
+        
+        <!-- Product Card 2 -->
+        <div class="product-card product-card-2">
+            <img src="img/t2.png" alt="원본 이미지" class="product-image">
+            <div class="product-info">
+                <div class="product-name">대형견 프리미엄 자연육 사료</div>
+                <div class="product-brand">정 푸르펫</div>
+                <div class="product-price">26,500원</div>
+                <div class="product-tags">
+                    <span class="product-tag">#자연원료</span>
+                    <span class="product-tag">#고기</span>
+                    <span class="product-tag">#연어포함</span>
+                </div>
+            </div>
+        </div>
+        <div class="product-divider divider-2"></div>
+        
+        <!-- Product Card 3 -->
+        <div class="product-card product-card-3">
+            <img src="img/t3.png" alt="원본 이미지" class="product-image">
+            <div class="product-info">
+                <div class="product-name">닥티스 시니어케어 3kg</div>
+                <div class="product-brand">닥터펫</div>
+                <div class="product-price">32,000원</div>
+                <div class="product-tags">
+                    <span class="product-tag">#대형견</span>
+                    <span class="product-tag">#관절건강</span>
+                    <span class="product-tag">#향산화케어</span>
+                </div>
+            </div>
+        </div>
+        <div class="product-divider divider-3"></div>
+        
+        <!-- Cart button -->
+        <button class="cart-button" onclick="addToCart()">장바구니 담기</button>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text active">홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <div class="nav-text">제보</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💗</div>
+                <div class="nav-text">보호소</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🛍️</div>
+                <div class="nav-text">쇼핑</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <div class="nav-text">마이</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter button functionality
+        const filterButtons = document.querySelectorAll('.filter-button');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filterText = this.textContent.trim();
+                console.log('Filter selected:', filterText);
+                
+                // Here you would typically filter the products
+                // For now, just show an alert
+                if (filterText !== '전체') {
+                    alert(`${filterText} 지역 상품을 필터링합니다.`);
+                }
+            });
+        });
+        
+        // Add to cart functionality
+        function addToCart() {
+            alert('선택한 상품이 장바구니에 담겼습니다!');
+            console.log('Items added to cart');
+        }
+        
+        // Back button
+        function goBack() {
+            alert('main 페이지로 돌아갑니다.');
+            // window.location.href = 'main.html';
+        }
+        
+        // Home navigation
+        document.querySelector('.nav-home').addEventListener('click', function() {
+            alert('main 페이지로 이동합니다.');
+            // window.location.href = 'main.html';
+        });
+        
+        // Product click handlers
+        document.querySelectorAll('.product-card').forEach((card, index) => {
+            card.addEventListener('click', function(e) {
+                // Don't trigger if clicking on filter buttons or cart button
+                if (e.target.closest('.filter-button') || e.target.closest('.cart-button')) {
+                    return;
+                }
+                
+                const productName = this.querySelector('.product-name').textContent;
+                alert(`${productName} 상품 상세 페이지로 이동합니다.`);
+                console.log('Product clicked:', productName);
+            });
+        });
+        
+        // Page loaded message
+        window.addEventListener('load', () => {
+            console.log('Shop page loaded. Ready for shopping!');
+        });
+    </script>
+</body>
+</html>
